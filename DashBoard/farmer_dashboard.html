@@ -1,0 +1,474 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+	<meta charset="utf-8">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+	<meta name="description" content="Responsive Admin &amp; Dashboard Template based on Bootstrap 5">
+	<meta name="author" content="AdminKit">
+	<meta name="keywords"
+		content="adminkit, bootstrap, bootstrap 5, admin, dashboard, template, responsive, css, sass, html, theme, front-end, ui kit, web">
+
+	<link rel="preconnect" href="https://fonts.gstatic.com">
+	<link rel="shortcut icon" href="img/icons/icon-48x48.png" />
+
+	<link rel="canonical" href="https://demo-basic.adminkit.io/" />
+
+	<title>Farmers Dashboard</title>
+
+	<link href="css/app.css" rel="stylesheet">
+	<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600&display=swap" rel="stylesheet">
+	
+	<style>
+		.loader-overlay {
+			position: fixed;
+			top: 0;
+			left: 0;
+			width: 100%;
+			height: 100%;
+			background-color: rgba(255, 255, 255, 0.8);
+			z-index: 9999;
+			display: flex;
+			justify-content: center;
+			align-items: center;
+		}
+		
+		.avatar {
+			width: 40px;
+			height: 40px;
+			display: flex;
+			align-items: center;
+			justify-content: center;
+			border-radius: 50%;
+		}
+		
+		.bg-primary-light {
+			background-color: rgba(0, 123, 255, 0.2);
+		}
+		
+		.bg-success-light {
+			background-color: rgba(40, 167, 69, 0.2);
+		}
+		
+		.bg-warning-light {
+			background-color: rgba(255, 193, 7, 0.2);
+		}
+		
+		.bg-danger-light {
+			background-color: rgba(220, 53, 69, 0.2);
+		}
+	</style>
+</head>
+
+<body>
+	<div class="wrapper">
+		<nav id="sidebar" class="sidebar js-sidebar">
+			<div class="sidebar-content js-simplebar">
+				<a class="sidebar-brand" href="farmer_dashboard.html">
+					<span class="align-middle">Dashboard</span>
+				</a>
+
+				<ul class="sidebar-nav">
+					<li class="sidebar-header">
+						Pages
+					</li>
+
+					<li class="sidebar-item active">
+						<a class="sidebar-link" href="farmer_dashboard.html">
+							<i class="align-middle" data-feather="sliders"></i> <span
+								class="align-middle">Dashboard</span>
+						</a>
+					</li>
+					
+					<li class="sidebar-item">
+						<a class="sidebar-link" href="profile.html">
+							<i class="align-middle" data-feather="user"></i> <span class="align-middle">Profile</span>
+						</a>
+					</li>
+					<li class="sidebar-item">
+						<a class="sidebar-link" href="inventory.html">
+							<i class="align-middle" data-feather="box"></i> <span class="align-middle">Inventory</span>
+						</a>
+					</li>
+					<li class="sidebar-item">
+						<a class="sidebar-link" href="orders.html">
+							<i class="align-middle" data-feather="shopping-cart"></i> <span
+								class="align-middle">Orders</span>
+						</a>
+					</li>
+				</ul>
+			</div>
+		</nav>
+
+		<div class="main">
+			<nav class="navbar navbar-expand navbar-light navbar-bg">
+				<a class="sidebar-toggle js-sidebar-toggle">
+					<i class="hamburger align-self-center"></i>
+				</a>
+
+				<div class="navbar-collapse collapse">
+					<ul class="navbar-nav navbar-align">
+						<li class="nav-item dropdown">
+							<a class="nav-icon dropdown-toggle" href="#" id="alertsDropdown" data-bs-toggle="dropdown">
+								
+							</a>
+							<div class="dropdown-menu dropdown-menu-lg dropdown-menu-end py-0"
+								aria-labelledby="alertsDropdown">
+								<div class="dropdown-menu-header">
+									4 New Notifications
+								</div>
+								<div class="list-group">
+									<a href="#" class="list-group-item">
+										<div class="row g-0 align-items-center">
+											<div class="col-2">
+												<i class="text-danger" data-feather="alert-circle"></i>
+											</div>
+											<div class="col-10">
+												<div class="text-dark">Update completed</div>
+												<div class="text-muted small mt-1">Restart server 12 to complete the
+													update.</div>
+												<div class="text-muted small mt-1">30m ago</div>
+											</div>
+										</div>
+									</a>
+									<a href="#" class="list-group-item">
+										<div class="row g-0 align-items-center">
+											<div class="col-2">
+												<i class="text-warning" data-feather="bell"></i>
+											</div>
+											<div class="col-10">
+												<div class="text-dark">Lorem ipsum</div>
+												<div class="text-muted small mt-1">Aliquam ex eros, imperdiet vulputate
+													hendrerit et.</div>
+												<div class="text-muted small mt-1">2h ago</div>
+											</div>
+										</div>
+									</a>
+									<a href="#" class="list-group-item">
+										<div class="row g-0 align-items-center">
+											<div class="col-2">
+												<i class="text-primary" data-feather="home"></i>
+											</div>
+											<div class="col-10">
+												<div class="text-dark">Login from 192.186.1.8</div>
+												<div class="text-muted small mt-1">5h ago</div>
+											</div>
+										</div>
+									</a>
+									<a href="#" class="list-group-item">
+										<div class="row g-0 align-items-center">
+											<div class="col-2">
+												<i class="text-success" data-feather="user-plus"></i>
+											</div>
+											<div class="col-10">
+												<div class="text-dark">New connection</div>
+												<div class="text-muted small mt-1">Christina accepted your request.
+												</div>
+												<div class="text-muted small mt-1">14h ago</div>
+											</div>
+										</div>
+									</a>
+								</div>
+								<div class="dropdown-menu-footer">
+									<a href="#" class="text-muted">Show all notifications</a>
+								</div>
+							</div>
+						</li>
+						
+						<li class="nav-item dropdown">
+							<a class="nav-icon dropdown-toggle d-inline-block d-sm-none" href="#"
+								data-bs-toggle="dropdown">
+								<i class="align-middle" data-feather="settings"></i>
+							</a>
+
+							<a class="nav-link dropdown-toggle d-none d-sm-inline-block" href="#"
+								data-bs-toggle="dropdown">
+								
+							</a>
+							<div class="dropdown-menu dropdown-menu-end">
+								<a class="dropdown-item" href="profile.html"><i class="align-middle me-1"
+										data-feather="user"></i> Profile</a>
+								
+								<div class="dropdown-divider"></div>
+								<a class="dropdown-item" href="#">Log out</a>
+							</div>
+						</li>
+					</ul>
+				</div>
+			</nav>
+			<div class="main">
+				<nav class="navbar navbar-expand navbar-light navbar-bg">
+					<a class="sidebar-toggle js-sidebar-toggle">
+						<div class="container-fluid p-0">
+					</a>
+					<div class="container-fluid p-0">
+						<h1 class="h3 mb-3"><strong>Analytics</strong> Dashboard</h1>
+
+						<div class="row">
+							<div class="col-xl-3 col-md-6">
+								<div class="card">
+									<div class="card-body">
+										<div class="d-flex align-items-center">
+											<div class="me-3">
+												<h5 class="card-title mb-0">Total Revenue</h5>
+												<div class="text-success h4 mt-2">₹15,750</div>
+												<div class="text-muted">+12.5% from last month</div>
+											</div>
+											<div class="avatar ms-auto bg-primary-light">
+												<i class="align-middle" data-feather="dollar-sign"></i>
+											</div>
+										</div>
+									</div>
+								</div>
+							</div>
+							<div class="col-xl-3 col-md-6">
+								<div class="card">
+									<div class="card-body">
+										<div class="d-flex align-items-center">
+											<div class="me-3">
+												<h5 class="card-title mb-0">Total Sales</h5>
+												<div class="text-primary h4 mt-2">267 kg</div>
+												<div class="text-muted">+8.3% from last month</div>
+											</div>
+											<div class="avatar ms-auto bg-success-light">
+												<i class="align-middle" data-feather="shopping-cart"></i>
+											</div>
+										</div>
+									</div>
+								</div>
+							</div>
+							<div class="col-xl-3 col-md-6">
+								<div class="card">
+									<div class="card-body">
+										<div class="d-flex align-items-center">
+											<div class="me-3">
+												<h5 class="card-title mb-0">Pending Orders</h5>
+												<div class="text-warning h4 mt-2">8</div>
+												<div class="text-muted">3 awaiting shipment</div>
+											</div>
+											<div class="avatar ms-auto bg-warning-light">
+												<i class="align-middle" data-feather="clock"></i>
+											</div>
+										</div>
+									</div>
+								</div>
+							</div>
+							<div class="col-xl-3 col-md-6">
+								<div class="card">
+									<div class="card-body">
+										<div class="d-flex align-items-center">
+											<div class="me-3">
+												<h5 class="card-title mb-0">Current Rating</h5>
+												<div class="text-danger h4 mt-2">4.8/5.0</div>
+												<div class="text-muted">Based on 42 reviews</div>
+											</div>
+											<div class="avatar ms-auto bg-danger-light">
+												<i class="align-middle" data-feather="star"></i>
+											</div>
+										</div>
+									</div>
+								</div>
+							</div>
+						</div>
+						<div class="row">
+							<div class="col-12 col-lg-8">
+								<div class="card">
+									<div class="card-header">
+										<h5 class="card-title">Monthly Revenue</h5>
+										<h6 class="card-subtitle text-muted">Track your earnings and sales throughout the year</h6>
+									</div>
+									<div class="card-body">
+										<div class="chart">
+											<canvas id="chartjs-bar"></canvas>
+										</div>
+									</div>
+								</div>
+							</div>
+							<div class="col-12 col-lg-4">
+								<div class="card">
+									<div class="card-header">
+										<h5 class="card-title">Crop Sales Distribution</h5>
+										<h6 class="card-subtitle text-muted">Sales breakdown by crop type</h6>
+									</div>
+									<div class="card-body">
+										<div class="chart chart-sm">
+											<canvas id="chartjs-doughnut"></canvas>
+										</div>
+									</div>
+								</div>
+							</div>
+						</div>
+
+						<!-- Recently Sold Crops Section -->
+						<div class="row">
+							<div class="col-12">
+								<div class="card">
+									<div class="card-header">
+										<h5 class="card-title">Recently Sold Crops</h5>
+									</div>
+									<div class="card-body">
+										<div class="table-responsive">
+											<table class="table table-striped table-hover">
+												<thead>
+													<tr>
+														<th>Order ID</th>
+														<th>Crop</th>
+														<th>Quantity</th>
+														<th>Price per Unit</th>
+														<th>Total</th>
+														<th>Date</th>
+														<th>Status</th>
+													</tr>
+												</thead>
+												<tbody>
+													<tr>
+														<td>#ORD-2023-1542</td>
+														<td>Wheat</td>
+														<td>50 kg</td>
+														<td>₹30/kg</td>
+														<td>₹1,500</td>
+														<td>Jul 12, 2023</td>
+														<td><span class="badge bg-success">Delivered</span></td>
+													</tr>
+													<tr>
+														<td>#ORD-2023-1541</td>
+														<td>Rice</td>
+														<td>75 kg</td>
+														<td>₹45/kg</td>
+														<td>₹3,375</td>
+														<td>Jul 10, 2023</td>
+														<td><span class="badge bg-success">Delivered</span></td>
+													</tr>
+													<tr>
+														<td>#ORD-2023-1538</td>
+														<td>Tomatoes</td>
+														<td>25 kg</td>
+														<td>₹80/kg</td>
+														<td>₹2,000</td>
+														<td>Jul 08, 2023</td>
+														<td><span class="badge bg-success">Delivered</span></td>
+													</tr>
+													<tr>
+														<td>#ORD-2023-1536</td>
+														<td>Potatoes</td>
+														<td>100 kg</td>
+														<td>₹25/kg</td>
+														<td>₹2,500</td>
+														<td>Jul 05, 2023</td>
+														<td><span class="badge bg-success">Delivered</span></td>
+													</tr>
+													<tr>
+														<td>#ORD-2023-1534</td>
+														<td>Onions</td>
+														<td>60 kg</td>
+														<td>₹35/kg</td>
+														<td>₹2,100</td>
+														<td>Jul 03, 2023</td>
+														<td><span class="badge bg-success">Delivered</span></td>
+													</tr>
+												</tbody>
+											</table>
+										</div>
+									</div>
+								</div>
+							</div>
+						</div>
+						
+						<!-- Revenue Summary Section -->
+						<div class="row">
+							<div class="col-12 col-lg-6">
+								<div class="card">
+									<div class="card-header">
+										<h5 class="card-title">Top Selling Crops</h5>
+									</div>
+									<div class="card-body">
+										<div class="table-responsive">
+											<table class="table">
+												<thead>
+													<tr>
+														<th>Crop</th>
+														<th>Total Sales</th>
+														<th>Revenue</th>
+														<th>Growth</th>
+													</tr>
+												</thead>
+												<tbody>
+													<tr>
+														<td>Rice</td>
+														<td>120 kg</td>
+														<td>₹5,400</td>
+														<td><span class="text-success">+12.5%</span></td>
+													</tr>
+													<tr>
+														<td>Wheat</td>
+														<td>90 kg</td>
+														<td>₹2,700</td>
+														<td><span class="text-success">+8.2%</span></td>
+													</tr>
+													<tr>
+														<td>Potatoes</td>
+														<td>150 kg</td>
+														<td>₹3,750</td>
+														<td><span class="text-danger">-2.3%</span></td>
+													</tr>
+													<tr>
+														<td>Tomatoes</td>
+														<td>65 kg</td>
+														<td>₹5,200</td>
+														<td><span class="text-success">+15.7%</span></td>
+													</tr>
+												</tbody>
+											</table>
+										</div>
+									</div>
+								</div>
+							</div>
+							<div class="col-12 col-lg-6">
+								<div class="card">
+									<div class="card-header">
+										<h5 class="card-title">Revenue by Customer Type</h5>
+									</div>
+									<div class="card-body">
+										<div class="chart">
+											<canvas id="chartjs-pie"></canvas>
+										</div>
+										<div class="mt-3">
+											<div class="d-flex justify-content-between mb-1">
+												<div class="fw-bold">Restaurants</div>
+												<div>₹7,850</div>
+											</div>
+											<div class="progress mb-3" style="height: 8px;">
+												<div class="progress-bar bg-primary" role="progressbar" style="width: 48%;" aria-valuenow="48" aria-valuemin="0" aria-valuemax="100"></div>
+											</div>
+											
+											<div class="d-flex justify-content-between mb-1">
+												<div class="fw-bold">Individual Buyers</div>
+												<div>₹5,200</div>
+											</div>
+											<div class="progress mb-3" style="height: 8px;">
+												<div class="progress-bar bg-warning" role="progressbar" style="width: 33%;" aria-valuenow="33" aria-valuemin="0" aria-valuemax="100"></div>
+											</div>
+											
+											<div class="d-flex justify-content-between mb-1">
+												<div class="fw-bold">Wholesalers</div>
+												<div>₹2,700</div>
+											</div>
+											<div class="progress mb-3" style="height: 8px;">
+												<div class="progress-bar bg-danger" role="progressbar" style="width: 19%;" aria-valuenow="19" aria-valuemin="0" aria-valuemax="100"></div>
+											</div>
+										</div>
+									</div>
+								</div>
+							</div>
+						</div>
+					</div>
+					<script src="js/app.js"></script>
+					<script src="js/farmer-dashboard.js"></script>
+				</nav>
+			</div>
+		</div>
+	</div>
+</body>
+
+</html>

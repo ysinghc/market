@@ -1,0 +1,13 @@
+# auth Type
+- login
+- register
+# inventory
+- get 
+- update 
+# order 
+- get 
+- update 
+# profile
+- getprofile
+
+# analytics

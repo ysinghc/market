@@ -1,0 +1,172 @@
+dbname: postgres
+password: 12345678
+dbuser: postgres
+
+              List of relations
+ Schema |       Name       | Type  |  Owner   
+--------+------------------+-------+----------
+ public | active_orders    | table | postgres
+ public | farmers          | table | postgres
+ public | fulfilled_orders | table | postgres
+ public | individual       | table | postgres
+ public | inventory        | table | postgres
+ public | inventory_log    | table | postgres
+ public | order_items      | table | postgres
+ public | products         | table | postgres
+ public | restaurants      | table | postgres
+
+    table_name    |    column_name     |          data_type          | constraint_type |   key_column   
+------------------+--------------------+-----------------------------+-----------------+----------------
+ active_orders    | id                 | integer                     | PRIMARY KEY     | id
+ active_orders    | customer_id        | integer                     | UNIQUE          | customer_id
+ active_orders    | customer_type      | character varying           | UNIQUE          | customer_type
+ active_orders    | order_details      | text                        |                 | 
+ active_orders    | total_price        | numeric                     |                 | 
+ active_orders    | order_date         | timestamp without time zone |                 | 
+ active_orders    | status             | character varying           |                 | 
+ active_orders    | last_updated       | timestamp without time zone |                 | 
+ farmers          | id                 | integer                     | PRIMARY KEY     | id
+ farmers          | legal_name         | character varying           |                 | 
+ farmers          | govt_id            | character varying           | UNIQUE          | govt_id
+ farmers          | contact_number     | character varying           | UNIQUE          | contact_number
+ farmers          | age                | integer                     |                 | 
+ farmers          | state_of_residence | character varying           |                 | 
+ farmers          | pin_code           | integer                     |                 | 
+ farmers          | address            | text                        |                 | 
+ farmers          | created_at         | timestamp without time zone |                 | 
+ farmers          | password           | character varying           |                 | 
+ fulfilled_orders | id                 | integer                     | PRIMARY KEY     | id
+ fulfilled_orders | order_id           | integer                     | FOREIGN KEY     | order_id
+ fulfilled_orders | order_id           | integer                     | UNIQUE          | order_id
+ fulfilled_orders | farmer_id          | integer                     | FOREIGN KEY     | farmer_id
+ fulfilled_orders | final_price        | numeric                     |                 | 
+ fulfilled_orders | fulfillment_date   | timestamp without time zone |                 | 
+ fulfilled_orders | delivery_status    | character varying           |                 | 
+ fulfilled_orders | last_updated       | timestamp without time zone |                 | 
+ individual       | id                 | integer                     | PRIMARY KEY     | id
+ individual       | legal_name         | character varying           |                 | 
+ individual       | govt_id            | character varying           | UNIQUE          | govt_id
+ individual       | password           | character varying           |                 | 
+ individual       | phone_no           | character varying           | UNIQUE          | phone_no
+ individual       | age                | integer                     |                 | 
+ individual       | address            | text                        |                 | 
+ individual       | pin_code           | character varying           |                 | 
+ inventory        | id                 | integer                     | PRIMARY KEY     | id
+ inventory        | farmer_id          | integer                     | FOREIGN KEY     | farmer_id
+ inventory        | product_id         | integer                     | FOREIGN KEY     | product_id
+ inventory        | quantity           | double precision            |                 | 
+ inventory        | unit               | character varying           |                 | 
+ inventory        | price_per_unit     | numeric                     |                 | 
+ inventory        | added_at           | timestamp without time zone |                 | 
+ inventory        | last_updated       | timestamp without time zone |                 | 
+ inventory_log    | id                 | integer                     | PRIMARY KEY     | id
+ inventory_log    | inventory_id       | integer                     | FOREIGN KEY     | inventory_id
+ inventory_log    | quantity_changed   | double precision            |                 | 
+ inventory_log    | change_type        | character varying           |                 | 
+ inventory_log    | change_timestamp   | timestamp without time zone |                 | 
+ order_items      | id                 | integer                     | PRIMARY KEY     | id
+ order_items      | order_id           | integer                     | FOREIGN KEY     | order_id
+ order_items      | quantity           | double precision            |                 | 
+ order_items      | price_at_order     | numeric                     |                 | 
+ order_items      | created_at         | timestamp without time zone |                 | 
+ order_items      | last_updated       | timestamp without time zone |                 | 
+ order_items      | product_id         | integer                     | FOREIGN KEY     | product_id
+ order_items      | farmer_id          | integer                     | FOREIGN KEY     | farmer_id
+ products         | id                 | integer                     | PRIMARY KEY     | id
+ products         | name               | character varying           | UNIQUE          | name
+ products         | category           | character varying           |                 | 
+ products         | description        | text                        |                 | 
+ restaurants      | id                 | integer                     | PRIMARY KEY     | id
+ restaurants      | owner_name         | character varying           |                 | 
+ restaurants      | phone_no           | character varying           | UNIQUE          | phone_no
+ restaurants      | password           | character varying           |                 | 
+ restaurants      | age                | integer                     |                 | 
+ restaurants      | shop_location      | text                        |                 | 
+ restaurants      | pin_code           | character varying           |                 | 
+ restaurants      | gstin              | character varying           | UNIQUE          | gstin
+ restaurants      | fssai_license      | character varying           | UNIQUE          | fssai_license
+
+
+
+                           +------------------+
+                           |   products       |
+                           |------------------|
+                           | id (PK)          |
+                           | name (UNIQUE)    |
+                           | category         |
+                           | description      |
+                           +--------+---------+
+                                    |
+                                    | (1-to-Many)
+                                    v
+                           +------------------+
+                           |   inventory      |
+                           |------------------|
+                           | id (PK)          |
+                           | farmer_id (FK)   |
+                           | product_id (FK)  |
+                           | quantity         |
+                           | unit             |
+                           | price_per_unit   |
+                           | added_at         |
+                           | last_updated     |
+                           +--------+---------+
+                                    |
+                                    | (1-to-Many)
+                                    v
+                           +------------------+
+                           | inventory_log    |
+                           |------------------|
+                           | id (PK)          |
+                           | inventory_id (FK)|
+                           | quantity_changed |
+                           | change_timestamp |
+                           +------------------+
+
+
++----------------+          +------------------+          +------------------+
+|  farmers      | (1-to-M) |    inventory     | (M-to-1) |  products        |
+|-------------- | -------- |---------------- | -------- |---------------- |
+| id (PK)       |         | farmer_id (FK)   |         | id (PK)          |
+| legal_name    |         | product_id (FK)  |         | name (UNIQUE)    |
+| govt_id (U)   |         | quantity         |         | category         |
+| contact_no(U) |         | price_per_unit   |         | description      |
++---------------+         +------------------+         +------------------+
+
+                              +------------------+
+                              | active_orders    |
+                              |------------------|
+                              | id (PK)          |
+                              | customer_id (U)  |
+                              | customer_type (U)|
+                              | order_details    |
+                              | total_price      |
+                              | order_date       |
+                              | status           |
+                              | last_updated     |
+                              +--------+---------+
+                                       |
+                           +-----------+-----------+
+                           | (1-to-M)              |
+                           v                        v
+           +------------------+          +------------------+
+           |   individual      |          |   restaurants    |
+           |------------------|          |------------------|
+           | id (PK)          |          | id (PK)          |
+           | legal_name       |          | owner_name       |
+           | govt_id (UNIQUE) |          | gstin (UNIQUE)   |
+           | phone_no (UNIQUE)|          | fssai_license(U) |
+           | password         |          | password         |
+           +------------------+          +------------------+
+
+
++----------------+         +------------------+         +----------------------+
+| active_orders | (1-to-M)| order_items      | (M-to-1)| fulfilled_orders     |
+|-------------- |-------- |---------------- |-------- |----------------------|
+| id (PK)       |        | id (PK)          |        | id (PK)               |
+| customer_id   |        | order_id (FK)    |        | order_id (FK, UNIQUE) |
+| customer_type |        | product_id (FK)  |        | farmer_id (FK)        |
+| total_price   |        | quantity         |        | final_price           |
+| status        |        | price_at_order   |        | fulfillment_date      |
+| last_updated  |        | created_at       |        | delivery_status       |
++----------------+       +------------------+        +----------------------+

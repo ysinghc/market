@@ -1,0 +1,91 @@
+body {
+    font-family: Arial, sans-serif;
+    background-color: #f4f4f4;
+    background-image: url(../assets/hotel-940730.jpg);
+    background-size: cover;  /* Ensures the image covers the entire viewport */
+    background-position: center;  /* Centers the image */
+    background-repeat: no-repeat;  /* Prevents the image from repeating */
+    background-attachment: fixed;  /* Keeps the image fixed when scrolling */
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    z-index: 2;
+    overflow: hidden;
+}
+
+
+.container {
+    z-index: 1;
+    padding: 20px;
+    border-radius: 10px;
+    box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
+    width: 1000px;
+    text-align: center;
+    background-color: rgba(255, 255, 255, 0.4); /* White with 80% opacity */
+}
+
+
+h2 {
+    margin-bottom: 26px;
+    font-size: 40px;
+    margin-top: 0px;
+}
+
+.form-row {
+    display: flex;
+    justify-content: space-between;
+    gap: 10px;
+    margin-bottom: 15px;
+}
+
+.input-box {
+    position: relative;
+    width: 50%;
+}
+
+.input-box.full-width {
+    width: 100%;
+}
+
+.input-box input {
+    width: 80%;
+    padding: 10px 40px 10px 10px;
+    border: 1px solid #ccc;
+    border-radius: 12px;
+    font-size: 16px;
+}
+
+.input-box i {
+    position: absolute;
+    right: 40px;
+    top: 50%;
+    transform: translateY(-50%);
+    color: #777;
+}
+
+button {
+    width: 40%;
+    padding: 10px;
+    margin-top: 10px;
+    border: none;
+    cursor: pointer;
+    border-radius: 5px;
+    font-size: 16px;
+    background: brown;
+    color: white;
+}
+
+button:hover {
+    opacity: 0.8;
+}
+
+/* Responsive Design */
+@media (max-width: 600px) {
+    .form-row {
+        flex-direction: column;
+    }
+    .input-box {
+        width: 100%;
+    }
+}

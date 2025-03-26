@@ -1,0 +1,136 @@
+/* Reset default styles */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: Arial, sans-serif;
+}
+
+/* Center content */
+body {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    background-image: url(../assets/nature-4430922.jpg);
+    background-size: cover;
+    background-repeat: no-repeat;
+    background-position: center;
+}
+
+/* Main container */
+.container {
+    display: flex;
+    width: 500px;  /* Set width */
+    height: 400px; /* Set height */
+    background: white;
+    box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.1);
+    border-radius: 10px;
+    overflow: hidden;
+}
+
+/* Left Side (Image) */
+.left {
+    flex: 1;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background-color: #ddd;
+}
+
+.left img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+/* Right Side (Login Form) */
+.right {
+    flex: 1;
+    padding: 40px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+}
+
+/* Heading */
+h2 {
+    text-align: center;
+    margin-bottom: 20px;
+}
+
+/* Input field styling */
+.input-box {
+    margin-bottom: 15px;
+}
+
+.input-box input {
+    width: 100%;
+    padding: 12px;
+    font-size: 16px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    outline: none;
+}
+
+/* Login button */
+.login-btn {
+    width: 100%;
+    padding: 12px;
+    background-color: #28a745;
+    border: none;
+    color: white;
+    font-size: 18px;
+    cursor: pointer;
+    border-radius: 5px;
+    transition: 0.3s;
+}
+
+.login-btn:hover {
+    background-color: #218838;
+}
+
+p{
+    margin-top: 40px;
+    margin-left: 65px;
+    font-size: 20px;
+}
+
+
+.password-box {
+    position: relative;
+    display: flex;
+    align-items: center;
+}
+
+.password-box input {
+    width: 100%;
+    padding-right: 40px;
+}
+
+.eye-icon {
+    position: absolute;
+    right: 10px;
+    top: 50%;
+    transform: translateY(-50%);
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 24px;
+    height: 24px;
+}
+
+
+/* Responsive Design */
+@media (max-width: 768px) {
+    .container {
+        flex-direction: column;
+        width: 60%;
+        height: auto;
+    }
+
+    .left img {
+        height: 200px;
+    }
+}

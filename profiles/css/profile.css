@@ -1,0 +1,98 @@
+/* Ensure the main container takes full height and centers content */
+.content {
+    display: flex;
+    justify-content: center;  /* Centers horizontally */
+    align-items: center;  /* Centers vertically */
+    height: 100vh; /* Full viewport height */
+}
+
+/* Style for the big-box container */
+.big-box {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    background-color: #f8f9fa;
+    padding: 20px;
+    border-radius: 10px;
+    box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.1);
+    width: 600px; /* Adjust width */
+    height: 550px;
+}
+
+/* Group box1 and box2 together without gap */
+.box1,
+.box2 {
+    width: 100%;
+    text-align: center;
+    background-color: white;
+    box-shadow: 0px 2px 5px rgba(0, 0, 0, 0.1);
+    padding: 15px;
+    margin: 0; /* Ensure no margin */
+    gap: 0;
+}
+
+/* Merge box1 and box2 */
+.box1 {
+    border-radius: 8px 0 0 0;
+}
+
+.box2 {
+    
+    border-radius: 0 0 8px 8px;
+}
+
+/* Style for box3 and box4 */
+.box3, .box4 {
+    margin-top: 5px;
+    width: 100%;
+    text-align: center;
+    padding: 15px;
+    background-color: white;
+    border-radius: 8px;
+    box-shadow: 0px 2px 5px rgba(0, 0, 0, 0.1);
+}
+
+/* Image inside box2 */
+.box2 img {
+    width: 120px;
+    height: 120px;
+    border-radius: 50%;
+    object-fit: cover;
+    display: block; /* Ensures no extra space below the image */
+    margin: 0 auto; /* Centers the image */
+}
+
+/* Remove unwanted margin/padding that may cause gaps */
+h1, h5, p {
+    margin: 5px 0;
+    padding: 0;
+}
+
+.text1{
+    font-size: 25px;
+}
+
+/* Position edit icon at the top-right of .big-box */
+.edit-icon {
+    position: absolute;
+    top: 210px;
+    right: 460px;
+    background-color: white;
+    border-radius: 50%;
+    padding: 8px;
+    box-shadow: 0px 2px 5px rgba(0, 0, 0, 0.1);
+    cursor: pointer;
+    transition: background 0.3s ease;
+}
+
+.edit-icon:hover {
+    background-color: #f0f0f0;
+}
+
+/* Adjust the icon size */
+.edit-icon i {
+    width: 18px;
+    height: 18px;
+    color: #333;
+}
