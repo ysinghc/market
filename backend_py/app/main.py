@@ -1,11 +1,18 @@
-from fastapi import FastAPI
+from fastapi import FastAPI, Depends
 from fastapi.middleware.cors import CORSMiddleware
 from fastapi.staticfiles import StaticFiles
 import os
 from pathlib import Path
+from sqlalchemy.orm import Session
+from sqlalchemy import text
 
 from app.core.config import settings
 from app.api.api_v1.api import api_router
+from app.db.session import engine, get_db
+from app.models import models
+
+# Create tables
+models.BaseModel.metadata.create_all(bind=engine)
 
 app = FastAPI(
     title="FarmSync API",
@@ -39,4 +46,14 @@ async def root():
         "docs_url": "/docs",
         "redoc_url": "/redoc",
         "api_prefix": "/api/v1"
-    } 
+    }
+
+@app.get("/health")
+async def health_check(db: Session = Depends(get_db)):
+    try:
+        # Try to make a simple query using SQLAlchemy's text function
+        result = db.execute(text("SELECT 1"))
+        result.scalar()  # Actually execute the query
+        return {"status": "healthy", "database": "connected"}
+    except Exception as e:
+        return {"status": "unhealthy", "database": str(e)} 
