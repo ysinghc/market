@@ -18,6 +18,18 @@ function getApiUrl(endpoint) {
     return `${API_CONFIG.BASE_URL}${endpoint}`;
 }
 
+// Function to log API requests
+function logApiRequest(url, method, data) {
+    console.log(`API Request: ${method} ${url}`);
+    console.log('Request Data:', data);
+}
+
+// Function to log API responses
+function logApiResponse(response, data) {
+    console.log(`API Response: ${response.status} ${response.statusText}`);
+    console.log('Response Data:', data);
+}
+
 document.getElementById("loginForm").addEventListener("submit", async function(event) {
     event.preventDefault();
 
@@ -33,13 +45,26 @@ document.getElementById("loginForm").addEventListener("submit", async function(e
     formData.append("username", email);
     formData.append("password", password);
 
+    const loginUrl = getApiUrl(API_CONFIG.ENDPOINTS.AUTH.LOGIN);
+    logApiRequest(loginUrl, 'POST', { username: email, password: '********' });
+
     try {
-        const response = await fetch(getApiUrl(API_CONFIG.ENDPOINTS.AUTH.LOGIN), {
+        const response = await fetch(loginUrl, {
             method: "POST",
-            body: formData
+            body: formData,
+            headers: {
+                'Accept': 'application/json'
+            }
         });
 
-        const result = await response.json();
+        let result;
+        try {
+            result = await response.json();
+            logApiResponse(response, result);
+        } catch (e) {
+            console.error('Error parsing JSON response:', e);
+            result = { detail: 'Error parsing server response' };
+        }
 
         if (response.ok) {
             alert("Login Successful!");
@@ -48,13 +73,24 @@ document.getElementById("loginForm").addEventListener("submit", async function(e
             localStorage.setItem('token', result.access_token);
             
             // Get user details
-            const userResponse = await fetch(getApiUrl(API_CONFIG.ENDPOINTS.USERS.ME), {
+            const userUrl = getApiUrl(API_CONFIG.ENDPOINTS.USERS.ME);
+            logApiRequest(userUrl, 'GET', {});
+            
+            const userResponse = await fetch(userUrl, {
                 headers: {
-                    "Authorization": `Bearer ${result.access_token}`
+                    "Authorization": `Bearer ${result.access_token}`,
+                    'Accept': 'application/json'
                 }
             });
             
-            const userData = await userResponse.json();
+            let userData;
+            try {
+                userData = await userResponse.json();
+                logApiResponse(userResponse, userData);
+            } catch (e) {
+                console.error('Error parsing user data JSON:', e);
+                userData = { role: 'unknown' };
+            }
             
             // Store user details in cookies
             document.cookie = `user_type=${userData.role}; path=/`;

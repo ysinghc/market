@@ -14,8 +14,8 @@ class User(BaseModel):
     # Relationships
     crops = relationship("Crop", back_populates="farmer")
     orders_as_buyer = relationship("Order", back_populates="buyer", foreign_keys="Order.buyer_id")
-    reviews_as_buyer = relationship("Review", back_populates="buyer", foreign_keys="Review.buyer_id")
-    reviews_as_farmer = relationship("Review", back_populates="farmer", foreign_keys="Review.farmer_id")
+    reviews_as_buyer = relationship("Review", back_populates="buyer", foreign_keys="[Review.buyer_id]")
+    reviews_as_farmer = relationship("Review", back_populates="farmer", foreign_keys="[Review.farmer_id]")
     
     __table_args__ = (
         CheckConstraint(role.in_(['farmer', 'buyer', 'admin']), name='valid_role'),
@@ -66,8 +66,8 @@ class Review(BaseModel):
     order_id = Column(Integer, ForeignKey("orders.id", ondelete="CASCADE"))
     
     # Relationships
-    buyer = relationship("User", back_populates="reviews_as_buyer")
-    farmer = relationship("User", back_populates="reviews_as_farmer")
+    buyer = relationship("User", back_populates="reviews_as_buyer", foreign_keys=[buyer_id])
+    farmer = relationship("User", back_populates="reviews_as_farmer", foreign_keys=[farmer_id])
     order = relationship("Order", back_populates="reviews")
     
     __table_args__ = (
