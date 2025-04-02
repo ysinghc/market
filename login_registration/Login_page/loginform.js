@@ -1,23 +1,24 @@
 document.getElementById("loginForm").addEventListener("submit", async function(event) {
     event.preventDefault();
 
-    const apiUrl = "https://farmsync.ysinghc.me/auth/login";
+    const apiUrl = "https://api.ysinghc.me/api/v1/auth/login";
 
-    const phoneNumber = document.getElementById("phone").value.trim();
+    const email = document.getElementById("phone").value.trim(); // Using phone field for email
     const password = document.getElementById("password").value.trim();
 
-    if (!phoneNumber || !password) {
-        alert("Please enter both phone number and password.");
+    if (!email || !password) {
+        alert("Please enter both email and password.");
         return;
     }
 
-    const data = { phone_no: phoneNumber, password: password };
+    const formData = new FormData();
+    formData.append("username", email);
+    formData.append("password", password);
 
     try {
         const response = await fetch(apiUrl, {
             method: "POST",
-            headers: { "Content-Type": "application/json" },
-            body: JSON.stringify(data)
+            body: formData
         });
 
         const result = await response.json();
@@ -25,27 +26,34 @@ document.getElementById("loginForm").addEventListener("submit", async function(e
         if (response.ok) {
             alert("Login Successful!");
 
-            const userType = result.user_type;
-            const user = result.user_details;
-
+            // Store token in localStorage
+            localStorage.setItem('token', result.access_token);
+            
+            // Get user details
+            const userResponse = await fetch("https://api.ysinghc.me/api/v1/users/me", {
+                headers: {
+                    "Authorization": `Bearer ${result.access_token}`
+                }
+            });
+            
+            const userData = await userResponse.json();
+            
             // Store user details in cookies
-            document.cookie = `user_type=${userType}; path=/`;
-            document.cookie = `user_id=${user.id}; path=/`;
-            document.cookie = `user_name=${user.legal_name || user.owner_name}; path=/`;
-            document.cookie = `phone=${user.contact_number || user.phone_no}; path=/`;
-            document.cookie = `address=${user.address || user.shop_location}; path=/`;
-            document.cookie = `pin_code=${user.pin_code}; path=/`;
-            document.cookie = `govt_id=${user.govt_id}; path=/`; // Pe8f4
-            document.cookie = `age=${user.age}; path=/`;
-            document.cookie = `state_of_residence=${user.state_of_residence}; path=/`;
+            document.cookie = `user_type=${userData.role}; path=/`;
+            document.cookie = `user_id=${userData.id}; path=/`;
+            document.cookie = `user_name=${userData.name}; path=/`;
+            document.cookie = `email=${userData.email}; path=/`;
+            if (userData.phone_number) {
+                document.cookie = `phone=${userData.phone_number}; path=/`;
+            }
 
-            // Redirect based on user type
-            if (userType === "farmer") {
-                window.location.href = "https://farmsync-github-io.pages.dev/DashBoard/farmer_dashboard.html";
-            } else if (userType === "individual") {
-                window.location.href = "https://farmsync-github-io.pages.dev/profiles/individual_profile/individual_profile.html";
-            } else if (userType === "restaurant") {
-                window.location.href = "https://farmsync-github-io.pages.dev/profiles/restraunt_profile/restraunt_profile.html";
+            // Redirect based on user role
+            if (userData.role === "farmer") {
+                window.location.href = "https://market.ysinghc.me/DashBoard/farmer_dashboard.html";
+            } else if (userData.role === "buyer") {
+                window.location.href = "https://market.ysinghc.me/profiles/individual_profile/individual_profile.html";
+            } else if (userData.role === "admin") {
+                window.location.href = "https://market.ysinghc.me/profiles/restraunt_profile/restraunt_profile.html";
             }
         } else {
             if (response.status === 401) {
@@ -61,8 +69,6 @@ document.getElementById("loginForm").addEventListener("submit", async function(e
         alert("Failed to connect to the API");
     }
 });
-
-
 
 // Toggle Password Visibility
 document.getElementById("togglePassword").addEventListener("click", function () {

@@ -1,0 +1,6 @@
+tunnel: farmsync-api
+credentials-file: /home/ysinghc/.cloudflared/132272aa-14b4-4e5f-900c-9d7bcfd4cbdd.json
+ingress:
+  - hostname: api.ysinghc.me
+    service: http://localhost:8000
+  - service: http_status:404 

@@ -1,7 +1,7 @@
 import requests
 import random
 
-BASE_URL = "https://farmsync.ysinghc.me"
+BASE_URL = "https://market.ysinghc.me"
 
 REGISTER_ENDPOINTS = {
     "farmer": "/users/register/farmer",

@@ -2,19 +2,21 @@ document.getElementById("individualForm").addEventListener("submit", async funct
     event.preventDefault(); // Prevent page reload
 
     const formData = {
-        legal_name: document.getElementById("legal_name").value,
-        govt_id: document.getElementById("govt_id").value,
-        phone_no: document.getElementById("phone_no").value,
-        age: parseInt(document.getElementById("age").value, 10),
+        name: document.getElementById("legal_name").value,
+        email: document.getElementById("govt_id").value, // Using govt_id field for email temporarily
+        password: document.getElementById("password").value,
+        phone_number: document.getElementById("phone_no").value,
         address: document.getElementById("address").value,
-        pin_code: parseInt(document.getElementById("pin_code").value, 10),
-        password: document.getElementById("password").value
+        pin_code: document.getElementById("pin_code").value,
+        role: 'buyer',
+        // Additional individual-specific fields
+        age: parseInt(document.getElementById("age").value, 10)
     };
 
     console.log("Submitting data:", formData); // Debugging
 
     try {
-        const response = await fetch("https://farmsync.ysinghc.me/auth/users/register/individual", {
+        const response = await fetch("https://api.ysinghc.me/api/v1/users/register", {
             method: "POST",
             headers: { "Content-Type": "application/json" },
             body: JSON.stringify(formData)
@@ -24,7 +26,7 @@ document.getElementById("individualForm").addEventListener("submit", async funct
         
         if (response.ok) {
             alert("Registration Successful! Redirecting to login...");
-            window.location.href = "https://farmsync-github-io.pages.dev/loginform.html"; // ✅ Redirect to frontend login page
+            window.location.href = "https://market.ysinghc.me/login_registration/Login_page/login.html";
         } else {
             if (response.status === 401) {
                 alert("Unauthorized access. Please check your credentials.");

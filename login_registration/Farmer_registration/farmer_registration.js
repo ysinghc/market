@@ -2,21 +2,32 @@ document.addEventListener("DOMContentLoaded", function () {
     document.getElementById("farmerForm").addEventListener("submit", async function(event) {
         event.preventDefault(); // Prevent default form submission
 
+        const password = document.getElementById("password").value;
+        const confirmPassword = document.getElementById("confirm_password").value;
+
+        if (password !== confirmPassword) {
+            alert("Passwords do not match!");
+            return;
+        }
+
         const formData = {
-            legal_name: document.getElementById("legal_name").value,
-            govt_id: document.getElementById("govt_id").value,
-            contact_number: document.getElementById("contact_number").value,
+            name: document.getElementById("legal_name").value,
+            email: document.getElementById("email").value,
+            password: password,
+            phone_number: document.getElementById("contact_number").value,
+            address: document.getElementById("address").value,
+            pin_code: document.getElementById("pin_code").value,
+            role: 'farmer',
+            // Additional farmer-specific fields
             age: parseInt(document.getElementById("age").value, 10),
             state_of_residence: document.getElementById("state_of_residence").value,
-            pin_code: parseInt(document.getElementById("pin_code").value, 10),
-            address: document.getElementById("address").value,
-            password: document.getElementById("password").value
+            govt_id: document.getElementById("govt_id").value
         };
 
         console.log("Submitting data:", formData); // Debugging
 
         try {
-            const response = await fetch("https://farmsync.ysinghc.me/auth/users/register/farmer", {
+            const response = await fetch("https://api.ysinghc.me/api/v1/users/register", {
                 method: "POST",
                 headers: { "Content-Type": "application/json" },
                 body: JSON.stringify(formData)
@@ -26,7 +37,7 @@ document.addEventListener("DOMContentLoaded", function () {
 
             if (response.ok) {
                 alert("Registration Successful! Redirecting to login...");
-                window.location.href = "https://farmsync-github-io.pages.dev/loginform.html"; // ✅ Redirect to frontend login page
+                window.location.href = "https://market.ysinghc.me/login_registration/Login_page/login.html";
             } else {
                 if (response.status === 401) {
                     alert("Unauthorized access. Please check your credentials.");
@@ -41,22 +52,28 @@ document.addEventListener("DOMContentLoaded", function () {
             console.error("Registration Error:", error);
         }
     });
-});
 
+    // Toggle Password Visibility
+    function setupPasswordToggle(inputId, toggleId, openEyeId, closedEyeId) {
+        const input = document.getElementById(inputId);
+        const toggle = document.getElementById(toggleId);
+        const eyeOpen = document.getElementById(openEyeId);
+        const eyeClosed = document.getElementById(closedEyeId);
 
-// Toggle Password Visibility
-document.getElementById("togglePassword").addEventListener("click", function () {
-    const passwordInput = document.getElementById("password");
-    const eyeOpen = document.getElementById("eyeOpen");
-    const eyeClosed = document.getElementById("eyeClosed");
-
-    if (passwordInput.type === "password") {
-        passwordInput.type = "text";
-        eyeOpen.style.display = "none";
-        eyeClosed.style.display = "inline";
-    } else {
-        passwordInput.type = "password";
-        eyeOpen.style.display = "inline";
-        eyeClosed.style.display = "none";
+        toggle.addEventListener("click", function () {
+            if (input.type === "password") {
+                input.type = "text";
+                eyeOpen.style.display = "inline";
+                eyeClosed.style.display = "none";
+            } else {
+                input.type = "password";
+                eyeOpen.style.display = "none";
+                eyeClosed.style.display = "inline";
+            }
+        });
     }
+
+    // Setup password toggles for both password fields
+    setupPasswordToggle("password", "togglePassword", "eyeOpen", "eyeClosed");
+    setupPasswordToggle("confirm_password", "toggleConfirmPassword", "confirmEyeOpen", "confirmEyeClosed");
 });

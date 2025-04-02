@@ -2,12 +2,15 @@ document.getElementById("restaurantForm").addEventListener("submit", async funct
     event.preventDefault(); // Prevent default form submission
 
     const formData = {
-        owner_name: document.getElementById("owner_name").value,
-        phone_no: document.getElementById("phone_no").value,
+        name: document.getElementById("owner_name").value,
+        email: document.getElementById("gstin").value, // Using GSTIN field for email temporarily
         password: document.getElementById("password").value,
-        age: parseInt(document.getElementById("age").value, 10),
-        shop_location: document.getElementById("shop_location").value,
+        phone_number: document.getElementById("phone_no").value,
+        address: document.getElementById("shop_location").value,
         pin_code: document.getElementById("pin_code").value,
+        role: 'admin',
+        // Additional restaurant-specific fields
+        age: parseInt(document.getElementById("age").value, 10),
         gstin: document.getElementById("gstin").value,
         fssai_license: document.getElementById("fssai_license").value
     };
@@ -15,7 +18,7 @@ document.getElementById("restaurantForm").addEventListener("submit", async funct
     console.log("Submitting data:", formData); // Debugging
 
     try {
-        const response = await fetch("https://farmsync.ysinghc.me/auth/users/register/restaurant", {
+        const response = await fetch("https://api.ysinghc.me/api/v1/users/register", {
             method: "POST",
             headers: { "Content-Type": "application/json" },
             body: JSON.stringify(formData)
@@ -25,7 +28,7 @@ document.getElementById("restaurantForm").addEventListener("submit", async funct
 
         if (response.ok) {
             alert("Registration Successful! Redirecting to login...");
-            window.location.href = "https://farmsync-github-io.pages.dev/loginform.html"; // ✅ Redirect to frontend login page
+            window.location.href = "https://market.ysinghc.me/login_registration/Login_page/login.html";
         } else {
             if (response.status === 401) {
                 alert("Unauthorized access. Please check your credentials.");
