@@ -1,7 +1,25 @@
+// Import API configuration
+const API_CONFIG = {
+    BASE_URL: 'http://localhost:8000',
+    ENDPOINTS: {
+        AUTH: {
+            LOGIN: '/api/v1/auth/login',
+            REGISTER: '/api/v1/auth/register'
+        },
+        USERS: {
+            ME: '/api/v1/users/me',
+            PROFILE: '/api/v1/users/profile'
+        }
+    }
+};
+
+// Function to get full API URL
+function getApiUrl(endpoint) {
+    return `${API_CONFIG.BASE_URL}${endpoint}`;
+}
+
 document.getElementById("loginForm").addEventListener("submit", async function(event) {
     event.preventDefault();
-
-    const apiUrl = "https://api.ysinghc.me/api/v1/auth/login";
 
     const email = document.getElementById("phone").value.trim(); // Using phone field for email
     const password = document.getElementById("password").value.trim();
@@ -16,7 +34,7 @@ document.getElementById("loginForm").addEventListener("submit", async function(e
     formData.append("password", password);
 
     try {
-        const response = await fetch(apiUrl, {
+        const response = await fetch(getApiUrl(API_CONFIG.ENDPOINTS.AUTH.LOGIN), {
             method: "POST",
             body: formData
         });
@@ -30,7 +48,7 @@ document.getElementById("loginForm").addEventListener("submit", async function(e
             localStorage.setItem('token', result.access_token);
             
             // Get user details
-            const userResponse = await fetch("https://api.ysinghc.me/api/v1/users/me", {
+            const userResponse = await fetch(getApiUrl(API_CONFIG.ENDPOINTS.USERS.ME), {
                 headers: {
                     "Authorization": `Bearer ${result.access_token}`
                 }
@@ -49,11 +67,11 @@ document.getElementById("loginForm").addEventListener("submit", async function(e
 
             // Redirect based on user role
             if (userData.role === "farmer") {
-                window.location.href = "https://market.ysinghc.me/DashBoard/farmer_dashboard.html";
+                window.location.href = "/DashBoard/farmer_dashboard.html";
             } else if (userData.role === "buyer") {
-                window.location.href = "https://market.ysinghc.me/profiles/individual_profile/individual_profile.html";
+                window.location.href = "/profiles/individual_profile/individual_profile.html";
             } else if (userData.role === "admin") {
-                window.location.href = "https://market.ysinghc.me/profiles/restraunt_profile/restraunt_profile.html";
+                window.location.href = "/profiles/restraunt_profile/restraunt_profile.html";
             }
         } else {
             if (response.status === 401) {
@@ -66,7 +84,7 @@ document.getElementById("loginForm").addEventListener("submit", async function(e
         }
     } catch (error) {
         console.error("Error:", error);
-        alert("Failed to connect to the API");
+        alert("Failed to connect to the API. Please check if the backend server is running.");
     }
 });
 
